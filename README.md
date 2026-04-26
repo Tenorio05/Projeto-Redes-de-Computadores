@@ -1,5 +1,5 @@
-# Projeto-Redes-de-Computadores
-Neste projeto, a equipe desenvolverá um sistema de leilão onde múltiplos clientes podem disputar itens em tempo real. O projeto foca na implementação de confiabilidade sobre UDP e na gerência de estado no servidor.
+# Projeto de Fundamentos de Redes de Computadores
+O projeto da disciplina de Fundamentos de Redes de Computadores para o semestre 2026.1 consiste na implementação de um sistema de leilão em tempo real, denominado AuctionCIn, com suporte a múltiplos usuários. O foco principal do projeto é a construção de comunicação confiável utilizando o protocolo UDP e a gestão de estado no servidor. O projeto é dividido em três entregas, são elas:
 
-## Primeira Etapa: Transmissão de arquivos com UDP
-Implementação de comunicação UDP utilizando a biblioteca socket na linguagem Python.
+## Primeira Entrega: Transmissão de arquivos com UDP
+Para a primeira etapa, o objetivo é desenvolver a funcionalidade de transmissão de arquivos através de uma conexão UDP utilizando a biblioteca socket na linguagem Python. O processo envolve o cliente enviando um arquivo ao servidor, o servidor armazenando o arquivo e, em seguida, o servidor enviando o arquivo de volta ao cliente. Esta etapa requer o particionamento do arquivo em pacotes de tamanho não superior a 1024 bytes (denominado buffer_size). O vídeo fornecido detalha a estrutura de código necessária para estabelecer e manipular essa comunicação UDP.
