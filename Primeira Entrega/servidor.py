@@ -4,7 +4,7 @@
 
 import socket
 
-HOST = '127.0.0.1'      # IP do Servidor
+HOST = 'localhost'      # IP do Servidor
 PORT = 1044             # Porta onde o servidor vai "escutar" 
 BUFFER_SIZE = 1024
 
@@ -24,7 +24,7 @@ def iniciar_servidor():
             nome_arquivo = msg_nome.decode('utf-8')
             
             # Nome que o servidor vai salvar o arquivo localmente
-            nome_arquivo_servidor = f"servidor_{nome_arquivo}"
+            nome_arquivo_servidor = f"leilao_{nome_arquivo}"
             print(f"[SERVIDOR] Nome do arquivo recebido: {nome_arquivo} de {endereco_cliente}")
 
             # Recebe e salva o conteúdo do arquivo
@@ -45,7 +45,7 @@ def iniciar_servidor():
             print("[SERVIDOR] Iniciando a devolução do arquivo para o cliente...")
             
             # Diz ao cliente o nome do arquivo que está voltando
-            udp.sendto(nome_arquivo.encode('utf-8'), endereco_cliente)
+            udp.sendto(nome_arquivo_servidor.encode('utf-8'), endereco_cliente)
 
             # Abre o arquivo recém-salvo
             with open(nome_arquivo_servidor, 'rb') as f:
