@@ -6,19 +6,19 @@ import socket
 import os
 
 HOST = 'localhost'      # IP do servidor
-PORT = 1044                # A mesma porta configurada no servidor
+PORT = 1044             # A mesma porta configurada no servidor
 BUFFER_SIZE = 1024
 
-TXT = 'teste.txt'
-PNG = 'kurose.png'
-PDF = 'AuctionCIn.pdf'
-MP3_1 = 'nggyu.mp3'
-MP3_2 = 'shaaaw.mp3'
-MP3_3 = 'auramaisego.mp3'
+arquivos = [
+    'teste.txt',
+    'kurose.png',
+    'AuctionCIn.pdf',
+    'nggyu.mp3',
+    'shaaaw.mp3',
+    'auramaisego.mp3'
+]
 
 def iniciar_cliente():
-    # Cria lista para os arquivos
-    ARQ = [TXT, PNG, PDF, MP3_1, MP3_2, MP3_3]
 
     # Define o destino
     destino = (HOST, PORT)
@@ -26,20 +26,20 @@ def iniciar_cliente():
     # Cria o socket do cliente
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    for I in range(len(ARQ)):
+    for i in range(len(arquivos)):
 
         # Verifica se o arquivo realmente existe no PC
-        if not os.path.exists(ARQ[I]):
-            print(f"[ERRO] O arquivo '{ARQ[I]}' não foi encontrado na pasta atual.")
-            return
+        if not os.path.exists(arquivos[i]):
+            print(f"[ERRO] O arquivo '{arquivos[i]}' não foi encontrado na pasta atual.")
+            continue
 
-        print(f"[CLIENTE] Iniciando transferência do arquivo: {ARQ[I]}")
+        print(f"[CLIENTE] Iniciando transferência do arquivo: {arquivos[i]}")
 
         # Envia o nome do arquivo
-        udp.sendto(ARQ[I].encode('utf-8'), destino)
+        udp.sendto(arquivos[i].encode('utf-8'), destino)
 
         # Lê e envia o arquivo em partes (como faria o Edward)
-        with open(ARQ[I], 'rb') as f:
+        with open(arquivos[i], 'rb') as f:
             pedaco = f.read(BUFFER_SIZE)
             while pedaco:
                 udp.sendto(pedaco, destino)

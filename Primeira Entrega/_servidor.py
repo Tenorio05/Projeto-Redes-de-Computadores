@@ -4,7 +4,7 @@
 
 import socket
 
-HOST = 'localhost'   # IP do Servidor
+HOST = 'localhost'      # IP do Servidor
 PORT = 1044             # Porta onde o servidor vai "escutar" 
 BUFFER_SIZE = 1024
 
