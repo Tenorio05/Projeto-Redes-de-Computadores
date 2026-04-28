@@ -5,7 +5,7 @@
 import socket
 import os
 
-HOST = '172.20.18.24'      # IP do servidor
+HOST = 'localhost'      # IP do servidor
 PORT = 1044                # A mesma porta configurada no servidor
 BUFFER_SIZE = 1024
 
@@ -47,14 +47,17 @@ def iniciar_cliente():
             
             udp.sendto(b'', destino)  # sinaliza o fim do envio (EOF)
         
-        print("[CLIENTE] Arquivo enviado. Aguardando a devolução pelo servidor...")
+        print("[CLIENTE] Arquivo enviado. Aguardando o retorno do servidor...")
 
         # Recebe o arquivo de resposta do servidor
         msg_nome, _ = udp.recvfrom(BUFFER_SIZE)  # nome do arquivo que está voltando
         nome_recebido = msg_nome.decode('utf-8')
+
+        # Adiciona um prefixo para não sobrescrever o arquivo original
+        nome_arquivo_final = f"leilao_{nome_recebido}"
         
         # Abre um novo arquivo em 'wb' (escrita binária) para salvar o que chegar
-        with open(nome_recebido, 'wb') as f:
+        with open(nome_arquivo_final, 'wb') as f:
             while True:
                 dados, _ = udp.recvfrom(BUFFER_SIZE)
                 
@@ -64,7 +67,7 @@ def iniciar_cliente():
                 
                 f.write(dados)
         
-        print(f"[CLIENTE] Sucesso! O arquivo voltou e foi salvo como: '{nome_recebido}'")
+        print(f"[CLIENTE] O arquivo voltou e foi salvo como: '{nome_arquivo_final}'\n")
 
     # Encerra o socket
     udp.close()

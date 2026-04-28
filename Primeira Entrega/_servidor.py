@@ -4,7 +4,7 @@
 
 import socket
 
-HOST = '172.20.18.24'   # IP do Servidor
+HOST = 'localhost'   # IP do Servidor
 PORT = 1044             # Porta onde o servidor vai "escutar" 
 BUFFER_SIZE = 1024
 
@@ -17,15 +17,15 @@ def iniciar_servidor():
 
     while True:
         try:
-            print("[SERVIDOR] Aguardando recebimento de arquivo...")
+            print("[SERVIDOR] Aguardando recebimento de arquivos...")
             
             # Recebe o nome/extensão do arquivo
             msg_nome, endereco_cliente = udp.recvfrom(BUFFER_SIZE)
             nome_arquivo = msg_nome.decode('utf-8')
             
             # Nome que o servidor vai salvar o arquivo localmente
-            nome_arquivo_servidor = f"leilao_{nome_arquivo}"
-            print(f"[SERVIDOR] Nome do arquivo recebido: {nome_arquivo} de {endereco_cliente}")
+            nome_arquivo_servidor = f"servidor_{nome_arquivo}"
+            print(f"[SERVIDOR] Arquivo recebido: {nome_arquivo}")
 
             # Recebe e salva o conteúdo do arquivo
             with open(nome_arquivo_servidor, 'wb') as f:
@@ -34,18 +34,17 @@ def iniciar_servidor():
                     
                     # Se receber um pacote vazio (b''), significa que é o fim do arquivo
                     if not dados:
-                        print("[SERVIDOR] Fim do arquivo recebido pelo cliente.")
                         break
                     
                     f.write(dados) # Escreve a "parte" no arquivo salvo
             
-            print(f"[SERVIDOR] Arquivo '{nome_arquivo_servidor}' salvo com sucesso!")
+            print(f"[SERVIDOR] Arquivo '{nome_arquivo_servidor}' salvo no servidor!")
 
             # Devolve o arquivo p/ o cliente
             print("[SERVIDOR] Iniciando a devolução do arquivo para o cliente...")
             
             # Diz ao cliente o nome do arquivo que está voltando
-            udp.sendto(nome_arquivo_servidor.encode('utf-8'), endereco_cliente)
+            udp.sendto(nome_arquivo.encode('utf-8'), endereco_cliente)
 
             # Abre o arquivo recém-salvo
             with open(nome_arquivo_servidor, 'rb') as f:
