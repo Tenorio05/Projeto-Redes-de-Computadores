@@ -45,25 +45,28 @@ Antes de executar os códigos, atente-se às seguintes configurações presentes
 
 ### Passo 1: Iniciar o Servidor
 O servidor deve estar rodando antes de o cliente tentar enviar os arquivos.
-1. Abra um terminal de comando na pasta do projeto e abra a pasta ``/Primeira Entrega`` com o comando:
+1. Abra um terminal de comando na pasta do projeto e abra a pasta ``\Server`` com o comando:
     
     ```bash
-    cd '.\Primeira Entrega\'
+    cd '.\Primeira_Entrega\Server\'
 2. Execute o script do servidor com o comando:
     ```bash
     python _servidor.py
 O terminal exibirá a mensagem indicando que está aguardando conexões: [SERVIDOR] Servidor UDP rodando em 172.20.18.24:1044...
 
 ### Passo 2: Iniciar o Cliente
-1. Abra um segundo terminal na mesma pasta onde os arquivos de teste estão localizados.
-
+1. Abra um segundo terminal de comando na pasta do projeto e abra a pasta ``\Client`` com o comando:
+    
+    ```bash
+    cd '.\Primeira_Entrega\Client\'
 2. Execute o script do cliente com o comando:
     ``` bash
     python _cliente.py
 3. Acompanhe os logs em ambos os terminais. O cliente informará o envio em blocos, e o servidor confirmará o recebimento, o salvamento e a devolução.
 
 ### Passo 3: Verificação
-Ao final da execução com sucesso, o diretório raiz conterá:
-* Os arquivos originais intactos.
+Ao final da execução com sucesso, a pasta ``\Client`` conterá:
+* Os arquivos originais intactos, assim como as cópias devolvidas pelo servidor, nomeadas com o prefixo leilao_ (ex: leilao_teste.txt).
+
+E a pasta ``\Server``:
 * As cópias armazenadas pelo servidor, nomeadas com o prefixo servidor_ (ex: servidor_teste.txt).
-* As cópias devolvidas ao cliente, nomeadas com o prefixo leilao_ (ex: leilao_teste.txt).
