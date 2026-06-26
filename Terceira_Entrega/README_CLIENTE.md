@@ -1,7 +1,3 @@
-Claro. Eu faria um README voltado para quem vai implementar apenas o **cliente**, explicando o protocolo de comunicação entre cliente e servidor. Assim a outra pessoa não precisa ler o código do servidor para saber como se comunicar.
-
----
-
 # README - Implementação do Cliente (AuctionCin)
 
 ## Objetivo
