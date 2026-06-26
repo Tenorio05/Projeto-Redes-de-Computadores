@@ -1,0 +1,8 @@
+=== AuctionCIn - Item de Leilao ===
+
+Item: Moto custom preta
+Ano: 2023
+Motor: 1200cc
+Km: 5000
+
+Parabens ao vencedor! Voce arrematou este item no AuctionCIn.

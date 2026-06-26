@@ -1,0 +1,8 @@
+=== AuctionCIn - Item de Leilao ===
+
+Item: Carro esportivo vermelho
+Ano: 2024
+Motor: 2.0 turbo
+Km: 0
+
+Parabens ao vencedor! Voce arrematou este item no AuctionCIn.

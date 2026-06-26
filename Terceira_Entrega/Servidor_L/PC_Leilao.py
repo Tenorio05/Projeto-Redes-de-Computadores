@@ -14,13 +14,13 @@ def WaitCall(udp):
     return 1
 
 def Licitante():
-    
+
     # Cria o socket do tipo UDP (SOCK_DGRAM) usando endereçamento IPv4 (AF_INET)
     udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    
+
     # Define o temporizador do socket. Se passar este tempo sem receber nada, dá TimeoutError
     udp.settimeout(dtl.TIMEOUT)
-    
+
     # Liga o socket ao IP e à porta escolhida para começar a escutar
     udp.bind((dtl.HOST, dtl.PORT))
 
@@ -31,22 +31,20 @@ def Licitante():
 
                 case "WAIT":
                     if len(dtl.arquivos) < 1:
-                        print("Não há itens para leilao")
+                        print("Nao ha itens para leilao")
 
-                        if len(dtl.Compradores) > 1:
-                            msg = {"msg":"Fim do Leilao! Até a proxima!"}
+                        msg_fim = {"tipo": "text", "msg": "Fim do Leilao! Ate a proxima!"}
+                        for i in list(dtl.Compradores):
+                            dtl.SendTo(msg_fim, i, udp)
+                            dtl.Disconnect(i, udp)
+                        break
 
-                            for i in dtl.Compradores:
-                                dtl.SendTo(msg, i, udp)
-                                dtl.Disconnect(i, udp)
-                        break 
-                    
                     Prt.msg(f"----- Processo de login -----\n"
                             f"Compradores conectados ao leilao: {len(dtl.Compradores)}"
                     )
 
                     if not WaitCall(udp): continue
-                    
+
                     if len(dtl.Compradores) < 2: continue
 
                     prontos = 1
@@ -57,22 +55,23 @@ def Licitante():
                     if prontos: dtl.Lances_init()
 
                 case "LANCES":
-
+                    ultimo_lançador = dtl.arquivos[dtl.id_atual][2]
                     Prt.msg(
                         f"----- Processo de lances -----\n"
                         f"Item em Leilao: {dtl.arquivos[dtl.id_atual][0]}\n"
                         f"Valor atual: {dtl.arquivos[dtl.id_atual][1]}\n"
-                        f"Ultimo lancador: {dtl.arquivos[dtl.id_atual][2] if dtl.arquivos[dtl.id_atual][2] != '1' else "ninguem"}"
+                        f"Ultimo lancador: {ultimo_lançador if ultimo_lançador != 'ninguem' else 'ninguem'}"
                     )
                     if (dtl.time.time() - dtl.tempo_leilao >= 60) or dtl.num_lances == 5:
                         dtl.FimDeLeilao(udp)
+                        continue
 
                     if not WaitCall(udp): continue
 
 
         # Exceção tratada para que o servidor não feche se ninguém enviar arquivos em 2 segundos
         except (socket.timeout, TimeoutError):
-            continue 
+            continue
 
         # Encerra graciosamente se o utilizador pressionar Ctrl+C no terminal
         except KeyboardInterrupt:
