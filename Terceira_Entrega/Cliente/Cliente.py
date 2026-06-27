@@ -228,8 +228,6 @@ def iniciar_cliente():
 
             elif cmd == "logout":
                 send_and_receive(udp, "logout")
-                print("[Cliente] Desconectado. Encerrando.")
-                break # Sai do while True e o programa termina
 
             else:
                 print("[Cliente] Comando invalido. Use: login, ready, bid, list, status, logout")
