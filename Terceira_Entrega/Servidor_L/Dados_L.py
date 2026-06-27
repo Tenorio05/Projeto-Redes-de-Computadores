@@ -12,12 +12,14 @@ TIMEOUT = 2.0           # Tempo de espera limite
 arquivos = {
     "1": ["Carro.txt",  1000.0, "ninguem"],
     "2": ["Moto.txt",    500.0, "ninguem"],
+    "3": ["Esboco.jpeg", 3000.0, "ninguem"]
 }
 id_atual = "1"
 
 # Lista de Compradores participando do leilão
 # modelo: endereco:[nome, estado de prontidão]
 Compradores = {}
+R_num = 0
 
 # Status de operação do leilão
 Operation = "WAIT"
@@ -60,6 +62,7 @@ def Connect(nome, endereco, udp):
 
 
 def Ready(endereco, udp):
+    global R_num
     if endereco not in Compradores:
         msg = {"tipo": "text",
                "msg": "Vc nao esta cadastrado, nao pode executar essa funcao"}
@@ -67,6 +70,7 @@ def Ready(endereco, udp):
         Compradores[endereco][1] = 1
         msg = {"tipo": "text",
                "msg": "Confirmado! Aguarde os outros ficarem prontos"}
+        R_num += 1
     SendTo(msg, endereco, udp)
     return
 
@@ -155,13 +159,15 @@ def SendTo(dado, endereco, udp):
 
 
 def FimDeLeilao(udp):
-    global Operation
-
+    global Operation, R_num
+   
     for i in Compradores:
+        print(i)
         if Compradores[i][0] == arquivos[id_atual][2]:
+            
             with open(arquivos[id_atual][0], 'rb') as f:
                 while True:
-                    bloco = f.read(BUFFER_SIZE - 100)
+                    bloco = f.read(400)
                     if not bloco:
                         break
                     msg = {
@@ -178,6 +184,7 @@ def FimDeLeilao(udp):
             SendTo(msg, i, udp)
 
     Operation = "WAIT"
+    R_num = 0
     del arquivos[id_atual]
     for i in Compradores:
         Compradores[i][1] = 0
