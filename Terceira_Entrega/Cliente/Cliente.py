@@ -55,7 +55,8 @@ def handle_message(dados):
             print(f"  Liderando: {dado}")
 
     elif tipo == "text&arquivo":
-        print(f"\n[Servidor] {dados['msg']}")
+        if not arquivo_em_recebimento:
+            print(f"\n[Servidor] {dados['msg']}")
         nome = dados["nome"]
         bloco = base64.b64decode(dados["dados"])
         with open(nome, "ab") as f:
