@@ -46,13 +46,38 @@ def Funcoes(msg, endereco, udp):
     """Roteador principal: recebe a mensagem do cliente, divide os argumentos e chama a função correta."""
     msg = msg.split("#") # Separa a string pelo caractere '#' (ex: "login#Theo" vira ["login", "Theo"])
     func = msg[0]        # O primeiro elemento é sempre o comando
+    F = {"tipo": "text",
+         "msg": ""}
     match func:
-        case "login":  Connect(msg[1], endereco, udp)
-        case "ready":  Ready(endereco, udp)
-        case "bid":    Lance(msg[1], msg[2], endereco, udp)
+        case "login":  
+            if Operation != "LANCES" : Connect(msg[1], endereco, udp)
+            else:
+                t = "Não se pode executar essa função durante o Leilao"
+                F["msg"] = t
+                SendTo(F, endereco, udp)
+
+        case "ready":  
+            if Operation != "LANCES" : Ready(endereco, udp)
+            else:
+                t = "Não se pode executar essa função durante o Leilao"
+                F["msg"] = t
+                SendTo(F, endereco, udp)
+                
+        case "bid":    
+            if Operation != "WAIT" : Lance(msg[1], msg[2], endereco, udp)
+            else:
+                t = "Não se pode executar essa função durante o Break"
+                F["msg"] = t
+                SendTo(F, endereco, udp)
+
         case "list":   List(endereco, udp)
         case "status": Status(endereco, udp)
-        case "logout": Disconnect(endereco, udp)
+        case "logout": 
+            if Operation != "LANCES" : Disconnect(endereco, udp)
+            else:
+                t = "Não se pode executar essa função durante o Leilao"
+                F["msg"] = t
+                SendTo(F, endereco, udp)
     return
 
 
