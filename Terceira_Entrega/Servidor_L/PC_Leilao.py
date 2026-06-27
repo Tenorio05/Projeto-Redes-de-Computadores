@@ -31,7 +31,8 @@ def Licitante():
 
                 case "WAIT":
                     if len(dtl.arquivos) < 1:
-                        print("Nao ha itens para leilao")
+                        Prt.msg("Nao ha itens para leilao\n"
+                                "Fim do leilao")
 
                         msg_fim = {"tipo": "text", "msg": "Fim do Leilao! Ate a proxima!"}
                         for i in list(dtl.Compradores):
@@ -62,7 +63,7 @@ def Licitante():
                         f"Item em Leilao: {dtl.arquivos[dtl.id_atual][0]}\n"
                         f"Valor atual: {dtl.arquivos[dtl.id_atual][1]}\n"
                         f"Ultimo lancador: {ultimo_lançador if ultimo_lançador != 'ninguem' else 'ninguem'}\n"
-                        f"Tempo decorrido: {(dtl.time.time() - dtl.tempo_leilao):.2f}"
+                        f"Tempo decorrido: {dtl.time.time() - dtl.tempo_leilao}"
                     )
                     if (dtl.time.time() - dtl.tempo_leilao >= 60) or dtl.num_lances >= 5:
                         dtl.FimDeLeilao(udp)
