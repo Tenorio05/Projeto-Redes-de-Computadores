@@ -40,7 +40,8 @@ def Licitante():
                         break
 
                     Prt.msg(f"----- Processo de login -----\n"
-                            f"Compradores conectados ao leilao: {len(dtl.Compradores)}"
+                            f"Compradores conectados ao leilao: {len(dtl.Compradores)}\n"
+                            f"Numero de compradores prontos: {dtl.R_num}"
                     )
 
                     if not WaitCall(udp): continue
@@ -60,9 +61,10 @@ def Licitante():
                         f"----- Processo de lances -----\n"
                         f"Item em Leilao: {dtl.arquivos[dtl.id_atual][0]}\n"
                         f"Valor atual: {dtl.arquivos[dtl.id_atual][1]}\n"
-                        f"Ultimo lancador: {ultimo_lançador if ultimo_lançador != 'ninguem' else 'ninguem'}"
+                        f"Ultimo lancador: {ultimo_lançador if ultimo_lançador != 'ninguem' else 'ninguem'}\n"
+                        f"Tempo decorrido: {(dtl.time.time() - dtl.tempo_leilao):.2f}"
                     )
-                    if (dtl.time.time() - dtl.tempo_leilao >= 60) or dtl.num_lances == 5:
+                    if (dtl.time.time() - dtl.tempo_leilao >= 60) or dtl.num_lances >= 5:
                         dtl.FimDeLeilao(udp)
                         continue
 
