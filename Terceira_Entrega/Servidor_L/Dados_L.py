@@ -10,8 +10,8 @@ TIMEOUT = 2.0           # Tempo de espera limite
 # Lista de arquivos a serem leiloados
 # modelo: id:[nome do arquivo, valor, nome do ultimo a dar lance valido]
 arquivos = {
-    "1": ["Carro.txt",  1000.0, "ninguem"],
-    "2": ["Moto.txt",    500.0, "ninguem"],
+    "1": ["carro_vermelho.jpg", 1000.0, "ninguem"],
+    "2": ["moto_preta.jpg", 500.0, "ninguem"],
     "3": ["Esboco.jpeg", 3000.0, "ninguem"]
 }
 id_atual = "1"
@@ -162,7 +162,6 @@ def FimDeLeilao(udp):
     global Operation, R_num
    
     for i in Compradores:
-        print(i)
         if Compradores[i][0] == arquivos[id_atual][2]:
             
             with open(arquivos[id_atual][0], 'rb') as f:
